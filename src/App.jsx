@@ -119,10 +119,14 @@ function App() {
                       <span className="abbreviation">{test.rovidites}</span>
                     </div>
                     <p>
-                      {test.minta} <span className="dot">•</span>{" "}
+                      {test.kategoria} <span className="dot">•</span>{" "}
                       {test.adalekanyag}
                       <span className="dot">•</span>
-                      <span style={{ color: test.vegezheto ? "green" : "red" }}>
+                      <span
+                        style={{
+                          color: test.vegezheto ? "#22a06b" : "#ef4444",
+                        }}
+                      >
                         {test.vegezheto ? "true" : "false"}
                       </span>
                     </p>
@@ -169,11 +173,17 @@ function App() {
                   title={`${test.cso} cső`}
                 />
                 <div className="test-info">
-                  <h3>{test.vizsgalat}</h3>
+                  <h3>
+                    {test.vizsgalat}{" "}
+                    <span className="abbreviation">{test.rovidites}</span>
+                  </h3>
                   <p>
-                    {test.rovidites} <span className="dot">•</span> {test.cso}{" "}
-                    cső <span className="dot">•</span>
-                    <span style={{ color: test.vegezheto ? "green" : "red" }}>
+                    {/* {test.rovidites} <span className="dot">•</span> {test.cso}{" "} */}
+                    {/* cső <span className="dot">•</span> */}
+                    {test.kategoria} <span className="dot">•</span>{" "}
+                    <span
+                      style={{ color: test.vegezheto ? "#22a06b" : "#ef4444" }}
+                    >
                       {test.vegezheto ? "true" : "false"}
                     </span>
                   </p>
