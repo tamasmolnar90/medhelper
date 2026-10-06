@@ -13,7 +13,7 @@ export const data = [
     minta: "teljes vér",
     adalekanyag: "EDTA",
     egyseg: null,
-    vegezheto: true,
+    vegezheto: false,
     megjegyzes: null,
   },
   {

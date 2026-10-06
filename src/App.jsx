@@ -1,30 +1,30 @@
-import { useMemo, useState } from 'react'
-import { data } from './data/data'
-import './App.css'
+import { useMemo, useState } from "react";
+import { data } from "./data/data";
+import "./App.css";
 
 const normalize = (value) =>
   value
-    .toLocaleLowerCase('hu-HU')
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
+    .toLocaleLowerCase("hu-HU")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
 
 const tubeColors = {
-  lila: '#8b5cf6',
-  piros: '#ef4444',
-  sarga: '#f0b429',
-  zold: '#22a06b',
-  kek: '#3b82f6',
-  szurke: '#64748b',
-  fekete: '#1f2937',
-}
+  lila: "#8b5cf6",
+  piros: "#ef4444",
+  sarga: "#f0b429",
+  zold: "#22a06b",
+  kek: "#3b82f6",
+  szurke: "#64748b",
+  fekete: "#1f2937",
+};
 
 function App() {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [selectedTests, setSelectedTests] = useState([])
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedTests, setSelectedTests] = useState([]);
 
   const filteredTests = useMemo(() => {
-    const query = normalize(searchTerm.trim())
-    if (!query) return []
+    const query = normalize(searchTerm.trim());
+    if (!query) return [];
 
     return data
       .filter((test) =>
@@ -32,29 +32,29 @@ function App() {
           normalize(field).includes(query),
         ),
       )
-      .slice(0, 20)
-  }, [searchTerm])
+      .slice(0, 20);
+  }, [searchTerm]);
 
   const tubeSummary = useMemo(
     () =>
       selectedTests.reduce((summary, test) => {
-        summary[test.cso] = (summary[test.cso] || 0) + 1
-        return summary
+        summary[test.cso] = (summary[test.cso] || 0) + 1;
+        return summary;
       }, {}),
     [selectedTests],
-  )
+  );
 
   const addTest = (test) => {
     setSelectedTests((current) =>
       current.some((selected) => selected.id === test.id)
         ? current
         : [...current, test],
-    )
-  }
+    );
+  };
 
   const removeTest = (id) => {
-    setSelectedTests((current) => current.filter((test) => test.id !== id))
-  }
+    setSelectedTests((current) => current.filter((test) => test.id !== id));
+  };
 
   return (
     <main className="app-shell">
@@ -91,7 +91,7 @@ function App() {
             <button
               type="button"
               className="clear-button"
-              onClick={() => setSearchTerm('')}
+              onClick={() => setSearchTerm("")}
               aria-label="Keresés törlése"
             >
               ×
@@ -101,14 +101,16 @@ function App() {
 
         <div className="results" aria-live="polite">
           {!searchTerm.trim() ? (
-            <p className="empty-state">Kezdj el gépelni a vizsgálatok kereséséhez.</p>
+            <p className="empty-state">
+              Kezdj el gépelni a vizsgálatok kereséséhez.
+            </p>
           ) : filteredTests.length === 0 ? (
             <p className="empty-state">Nincs találat erre a keresésre.</p>
           ) : (
             filteredTests.map((test) => {
               const isSelected = selectedTests.some(
                 (selected) => selected.id === test.id,
-              )
+              );
               return (
                 <article className="result-card" key={test.id}>
                   <div className="test-info">
@@ -117,20 +119,25 @@ function App() {
                       <span className="abbreviation">{test.rovidites}</span>
                     </div>
                     <p>
-                      {test.minta} <span className="dot">•</span> {test.adalekanyag}
+                      {test.minta} <span className="dot">•</span>{" "}
+                      {test.adalekanyag}
+                      <span className="dot">•</span>
+                      <span style={{ color: test.vegezheto ? "green" : "red" }}>
+                        {test.vegezheto ? "true" : "false"}
+                      </span>
                     </p>
                   </div>
                   <button
                     type="button"
-                    className={`add-button ${isSelected ? 'is-added' : ''}`}
+                    className={`add-button ${isSelected ? "is-added" : ""}`}
                     onClick={() => addTest(test)}
                     disabled={isSelected}
                   >
-                    <span aria-hidden="true">{isSelected ? '✓' : '+'}</span>
-                    {isSelected ? 'Felvéve' : 'Felvesz'}
+                    <span aria-hidden="true">{isSelected ? "✓" : "+"}</span>
+                    {isSelected ? "Felvéve" : "Felvesz"}
                   </button>
                 </article>
-              )
+              );
             })
           )}
         </div>
@@ -158,13 +165,17 @@ function App() {
               <div className="selected-card" key={test.id}>
                 <span
                   className="tube-dot"
-                  style={{ backgroundColor: tubeColors[test.cso] || '#64748b' }}
+                  style={{ backgroundColor: tubeColors[test.cso] || "#64748b" }}
                   title={`${test.cso} cső`}
                 />
                 <div className="test-info">
                   <h3>{test.vizsgalat}</h3>
                   <p>
-                    {test.rovidites} <span className="dot">•</span> {test.cso} cső
+                    {test.rovidites} <span className="dot">•</span> {test.cso}{" "}
+                    cső <span className="dot">•</span>
+                    <span style={{ color: test.vegezheto ? "green" : "red" }}>
+                      {test.vegezheto ? "true" : "false"}
+                    </span>
                   </p>
                 </div>
                 <button
@@ -192,14 +203,16 @@ function App() {
           </div>
         </div>
         {Object.keys(tubeSummary).length === 0 ? (
-          <p className="summary-empty">A csőösszesítő a kiválasztás után jelenik meg.</p>
+          <p className="summary-empty">
+            A csőösszesítő a kiválasztás után jelenik meg.
+          </p>
         ) : (
           <div className="tube-list">
             {Object.entries(tubeSummary).map(([color, amount]) => (
               <div className="tube-row" key={color}>
                 <span
                   className="tube-dot"
-                  style={{ backgroundColor: tubeColors[color] || '#64748b' }}
+                  style={{ backgroundColor: tubeColors[color] || "#64748b" }}
                 />
                 <span>{color} cső</span>
                 <strong>{amount} db</strong>
@@ -209,7 +222,7 @@ function App() {
         )}
       </section>
     </main>
-  )
+  );
 }
 
-export default App
+export default App;
