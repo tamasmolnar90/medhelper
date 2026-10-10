@@ -14,8 +14,8 @@ const tubeColors = {
   sarga: "#f0b429",
   zold: "#22a06b",
   kek: "#3b82f6",
-  szurke: "#64748b",
-  fekete: "#1f2937",
+  szurke: "#888",
+  fekete: "#000000",
 };
 
 function App() {
@@ -115,6 +115,13 @@ function App() {
                 <article className="result-card" key={test.id}>
                   <div className="test-info">
                     <div className="test-title-row">
+                      <span
+                        className="tube-dot"
+                        style={{
+                          backgroundColor: tubeColors[test.cso] || "#64748b",
+                        }}
+                        title={`${test.cso} cső`}
+                      />
                       <h3>{test.vizsgalat}</h3>
                       <span className="abbreviation">{test.rovidites}</span>
                     </div>
@@ -130,6 +137,12 @@ function App() {
                         {test.vegezheto ? "true" : "false"}
                       </span>
                     </p>
+                    {test.megjegyzes.length > 0 && (
+                      <p>
+                        <span style={{ color: "red" }}>Megjegyzés: </span>
+                        {test.megjegyzes}
+                      </p>
+                    )}
                   </div>
                   <button
                     type="button"
@@ -174,13 +187,13 @@ function App() {
                 />
                 <div className="test-info">
                   <h3>
-                    {test.vizsgalat}{" "}
+                    {test.vizsgalat}
                     <span className="abbreviation">{test.rovidites}</span>
                   </h3>
                   <p>
                     {/* {test.rovidites} <span className="dot">•</span> {test.cso}{" "} */}
                     {/* cső <span className="dot">•</span> */}
-                    {test.kategoria} <span className="dot">•</span>{" "}
+                    {test.kategoria} <span className="dot">•</span>
                     <span
                       style={{ color: test.vegezheto ? "#22a06b" : "#ef4444" }}
                     >
@@ -218,14 +231,14 @@ function App() {
           </p>
         ) : (
           <div className="tube-list">
-            {Object.entries(tubeSummary).map(([color, amount]) => (
+            {Object.entries(tubeSummary).map(([color /*amount*/]) => (
               <div className="tube-row" key={color}>
                 <span
                   className="tube-dot"
                   style={{ backgroundColor: tubeColors[color] || "#64748b" }}
                 />
                 <span>{color} cső</span>
-                <strong>{amount} db</strong>
+                {/* <strong>{amount} db</strong> */}
               </div>
             ))}
           </div>
