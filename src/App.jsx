@@ -16,6 +16,7 @@ const tubeColors = {
   kek: "#3b82f6",
   szurke: "#888",
   fekete: "#000000",
+  vizeletes: "#f0b429",
 };
 
 function App() {
@@ -243,7 +244,9 @@ function App() {
               <div className="tube-row" key={color}>
                 <span
                   className="tube-dot"
-                  style={{ backgroundColor: tubeColors[color] || "#64748b" }}
+                  style={{
+                    backgroundColor: tubeColors[color] /*|| "#64748b"*/,
+                  }}
                 />
                 <span>{color} cső</span>
                 {/* <strong>{amount} db</strong> */}
