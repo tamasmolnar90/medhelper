@@ -187,8 +187,10 @@ function App() {
                 />
                 <div className="test-info">
                   <h3>
-                    {test.vizsgalat}
-                    <span className="abbreviation">{test.rovidites}</span>
+                    {test.vizsgalat}{" "}
+                    {test.rovidites.length > 0 && (
+                      <span className="abbreviation">{test.rovidites}</span>
+                    )}
                   </h3>
                   <p>
                     {/* {test.rovidites} <span className="dot">•</span> {test.cso}{" "} */}
@@ -200,6 +202,12 @@ function App() {
                       {test.vegezheto ? "true" : "false"}
                     </span>
                   </p>
+                  {test.megjegyzes.length > 0 && (
+                    <p>
+                      <span style={{ color: "red" }}>Megjegyzés: </span>
+                      {test.megjegyzes}
+                    </p>
+                  )}
                 </div>
                 <button
                   type="button"
